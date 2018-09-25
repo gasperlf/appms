@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>index demo</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.js"></script>
+  <script src="https://cdn.datatables.net/rowreorder/1.0.0/js/dataTables.rowReorder.js"></script>
+  <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/rowreorder/1.0.0/css/rowReorder.dataTables.css">
+  <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+</head>
+
+<body>
+
+  <div class="container">
+    <div>
+      <input id="idEmployee" type="number">
+    </div>
+    <br />
+    <div>
+      <button id="getEmployees">Get Employees</button>
+    </div>
+    <br />
+    <table id="employees" class="display" style="width:100%">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Name</th>
+          <th>Role Id</th>
+          <th>Role Description</th>
+          <th>Annual salary</th>
+        </tr>
+      </thead>
+
+    </table>
+  </div>
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      var urlBase = 'http://localhost:8091/api/employees/salary/'
+
+      $("#getEmployees").click(function () {
+
+        var urlService = '';
+        var employeeId = $("#idEmployee").val();
+
+        if (employeeId === "") {
+          urlService = urlBase;
+        } else {
+          urlService = urlBase + employeeId;
+        }
+
+        $('#employees').DataTable({
+          destroy: true,
+          paging: false,
+          searching: false,
+          ajax: {
+            url: urlService,
+            dataSrc: ''
+          },
+          columns: [
+            { data: "id" },
+            { data: "name" },
+            { data: "roleId" },
+            { data: "roleDescription" },
+            { data: "salary" },
+          ]
+
+        });
+
+      });
+    });
+  </script>
+
+</body>
+
+</html>
